@@ -110,10 +110,21 @@
                                 class="badge badge-info">6</span> </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#"><i class="text-info ti-settings"></i>Settings</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="text-danger ti-unlock"></i>logout </a>
-                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                  @csrf
-                </form>                    </div>
+                        <a class="dropdown-item" href="#" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="text-danger ti-unlock"></i>logout </a>
+                        @if(auth('student')->check())
+                    <form method="POST" action="{{ route('logout','student') }}">
+                        @elseif(auth('teacher')->check())
+                            <form method="POST" action="{{ route('logout','teacher') }}">
+                                @elseif(auth('parent')->check())
+                                    <form method="POST" action="{{ route('logout','parent') }}">
+                                        @else
+                                            <form method="POST" action="{{ route('logout','web') }}">
+                                                @endif
+
+                                                @csrf
+                                                <a class="dropdown-item" href="#" onclick="event.preventDefault();this.closest('form').submit();"><i class="bx bx-log-out"></i>logout </a>
+                                            </form>
+                 </div>
                 </li>
             </ul>
         </nav>

@@ -28,6 +28,7 @@
         </div>
     </div>
 <div>
+
     @include('livewire.Father_Form')
 
     @include('livewire.Mother_Form')

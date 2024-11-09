@@ -40,39 +40,45 @@ use Livewire\Livewire; // Ensure Livewire is imported
     return redirect('/');
 })->name('logout');*/
 Route::get('/', [HomeController::class, 'index'])->name('selection');
+//Route::get('/',    [LoginController::class, 'ok']);
 
 Route::group(['namespace' => 'Auth'], function () {
     Route::get('/login/{type}',    [LoginController::class, 'loginForm'])->middleware('guest')->name('login.show');
     
     Route::post('/login', [LoginController::class, 'login'])->name('login');
-    
+    Route::post('/logout/{type}', [LoginController::class, 'logout'])->name('logout');
+  //  Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->middleware('guest')->name('register');
+
     
     });
 // Public routes
-Route::prefix(LaravelLocalization::setLocale())->middleware('localeSessionRedirect', 'localizationRedirect', 'localeViewPath')->group(function () {
-    // Login routes
-    Route::get('/', [HomeController::class, 'index'])->name('selection');
-    Route::post('/login', [LoginController::class, 'login'])->name('login');
-    Route::get('/login/{type}',    [LoginController::class, 'loginForm'])->middleware('guest')->name('login.show');
+// Public routes
+Route::prefix(LaravelLocalization::setLocale())
+    ->middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'])
+    ->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('selection');
+        Route::post('/login', [LoginController::class, 'login'])->name('login');
+        Route::get('/login/{type}', [LoginController::class, 'loginForm'])->middleware('guest')->name('login.show');
+        Route::post('/logout/{type}', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->middleware('guest')->name('register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 
-    Route::get(LaravelLocalization::transRoute('routes.login'), [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post(LaravelLocalization::transRoute('routes.login'), [LoginController::class, 'login']);
-
-    // Register routes
-    Route::get(LaravelLocalization::transRoute('routes.register'), [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post(LaravelLocalization::transRoute('routes.register'), [RegisterController::class, 'register']);
-});
+    });
 
 // Protected routes
-Route::middleware(['auth'])->group(function () {
+/*Route::prefix(LaravelLocalization::setLocale())
+    ->middleware(['localeSessionRedirect', 'localizationRedirect', 'localeViewPath','auth']) njm zada
+    ->group(function () {*/
+Route::middleware(['auth:web'])->group(function () {
     Route::prefix(LaravelLocalization::setLocale())->middleware(['localize', 'localizationRedirect', 'localeSessionRedirect'])->group(function () {
         // Dashboard route
         /*Route::get('/', function () {
             return view('dashboard');
         })->name('dashboard');*/
 //Route::get('/', [HomeController::class, 'index'])->name('selection');
+Route::get('/dashboard',[HomeController::class, 'dashboard'])->name('dashboard');
 
-        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+      //  Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
         Route::resource('Grades', GradeController::class);
         Route::post('/grades/create-meeting', [GradeController::class, 'createMeeting'])->name('Grades.createMeeting');
 
@@ -82,7 +88,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/classes/{grade_id}', [SectionController::class, 'getclasses'])->name('getClasses');
 
         // Livewire component view
-        Route::view('add_parent', 'livewire.show_Form');
+        Route::view('add_parent', 'livewire.show_Form')->name('add_parent');
         Route::view('show_parent', 'livewire.show_table');
         Route::resource('Teachers', TeacherController::class); 
         /*Route::group(['namespace' => 'Students'], function () {*/

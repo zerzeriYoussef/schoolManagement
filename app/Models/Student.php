@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\SoftDeletes; //momkn tamli machakl baad adhi lel delete ama archive fel graduatedstudent
-
-class Student extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable; 
+class Student extends Authenticatable
 {
     use SoftDeletes;
 

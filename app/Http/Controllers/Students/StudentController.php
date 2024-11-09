@@ -53,25 +53,24 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        return $this->Student->Edit_Student($id);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreStudentsRequest $request)
     {
-        //
+        return $this->Student->Update_Student($request);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+    public function destroy(Request $request)
     {
-        //
+        return $this->Student->Delete_Student($request);
     }
     public function Get_classrooms($id)
     {

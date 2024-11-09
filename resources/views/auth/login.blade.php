@@ -36,6 +36,8 @@
                                                 <div class="form-group">
                                                     <label> email</label>
                                                     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                                    <input type="hidden" value="{{$type}}" name="type">
+
                                                     @error('email')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -67,7 +69,12 @@
                                                     {{ __(' log IN') }}
                                                 </button>
                                             </form>
-                                        </div>
+                                            @if (\Session::has('message'))
+                                <div class="alert alert-danger">
+                                 <li>{!! \Session::get('message') !!}</li>
+                                </div>
+                            @endif
+                            <a href="{{route('register')}}">register as an admin to try</a>                                        </div>
                                     </div>
                                 </div>
                             </div>

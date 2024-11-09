@@ -17,4 +17,28 @@ class Attendance extends Model
         'matier_id',
 
     ];
+    public function students()
+    {
+        return $this->belongsTo(Student::class, 'student_id');
+    }
+
+
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class, 'gender_id');
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class, 'grade_id');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+    public function matier()
+    {
+        return $this->belongsTo(Matier::class, 'matier_id');
+    }
 }

@@ -75,6 +75,15 @@ class StudentRepository implements StudentRepositoryInterface{
         return view('pages.Students.add',$data);
  
      }
+     public function Edit_Student($id)
+     {
+         $data['Grades'] = Grade::all();
+         $data['parents'] = My_Parent::all();
+         $data['Genders'] = Gender::all();
+         $Students =  Student::findOrFail($id);
+         return view('pages.Students.edit',$data,compact('Students'));
+     }
+     
      public function Get_classrooms($id){
 
         $list_classes = Classroom::where("Grade_id", $id)->pluck("Name_Class", "id");
@@ -86,6 +95,34 @@ class StudentRepository implements StudentRepositoryInterface{
         $list_sections = Section::where("Class_id", $id)->pluck("Name_Section", "id");
         return response()->json($list_sections);  // Ensure this returns JSON
 
+    }
+    public function Delete_Student($request)
+    {
+
+        Student::destroy($request->id);
+        toastr()->error(trans('messages.Delete'));
+        return redirect()->route('Students.index');
+    }
+    public function Update_Student($request)
+    {
+        try {
+            $Edit_Students = Student::findorfail($request->id);
+            $Edit_Students->name = ['ar' => $request->name_ar, 'en' => $request->name_en];
+            $Edit_Students->email = $request->email;
+            $Edit_Students->password = Hash::make($request->password);
+            $Edit_Students->gender_id = $request->gender_id;
+            $Edit_Students->Date_Birth = $request->Date_Birth;
+            $Edit_Students->Grade_id = $request->Grade_id;
+            $Edit_Students->Classroom_id = $request->Classroom_id;
+            $Edit_Students->section_id = $request->section_id;
+            $Edit_Students->parent_id = $request->parent_id;
+            $Edit_Students->academic_year = $request->academic_year;
+            $Edit_Students->save();
+            Session::flash('success', trans('messages.Update'));
+            return redirect()->route('Students.index');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
     public function Show_Student($id){
         $Student = Student::findorfail($id);

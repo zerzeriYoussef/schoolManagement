@@ -11,6 +11,9 @@ interface StudentRepositoryInterface{
     public function Upload_attachment($request);
     public function Download_attachment($studentsname,$filename);
     public function Delete_attachment($request);
+    public function Edit_Student($id);
+    public function Update_Student($request);
+    public function Delete_Student($request);
 
     
     

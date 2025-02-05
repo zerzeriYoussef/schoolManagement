@@ -225,18 +225,18 @@ body{
 
         <div class="form-container sign-up">
             <form >
-                <h1>Create Account</h1>
+                <h1>Account created by Admin</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-youtube"></i></a>
                     <a href="#" class="icon"><i class="fa-brands fa-x-twitter"></i></a>
                 </div>
-                <span>or use your email for register</span>
+                <span>use your email for sign in received from admin</span>
                 <input type="text" placeholder="Full Name">
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
-                <button>Sign Up</button>    
+                <button>Sign In</button>    
             </form>
         </div>
 
@@ -253,8 +253,8 @@ body{
                 </div>
                 <span>Enter your email and password</span>
                 <input type="email" name="email" placeholder="Email">
-                <input type="hidden" name="password" value="{{$type}}" name="type">
-                <input type="password" placeholder="Password">
+                <input type="hidden"  value="{{$type}}" name="type">
+                <input type="password" name="password" placeholder="Password">
                                                                 
                 <a href="#">Forgot Password?</a>
                 <button type="submit">Sign In</button>

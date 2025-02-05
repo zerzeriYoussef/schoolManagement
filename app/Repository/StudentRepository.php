@@ -21,7 +21,7 @@ use Spatie\Translatable\HasTranslations;
 
 class StudentRepository implements StudentRepositoryInterface{
     public function Get_Student(){
-        $students = Student::all();
+        $students = Student::paginate(3);
         return view('pages.Students.index',compact('students'));
         
     }

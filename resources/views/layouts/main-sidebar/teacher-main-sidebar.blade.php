@@ -18,13 +18,13 @@
  <!-- الاقسام-->
  <li>
             <a href="{{route('sections')}}"><i class="fas fa-chalkboard"></i><span
-                    class="right-nav-text">{{ trans('teachers_trans.section') }} </span></a>
+                    class="right-nav-text">الاقسام</span></a>
         </li>
         
         <!-- الطلاب-->
         <li>
         <a target="_blank" href="{{route('student.index')}}"><i class="fas fa-user-graduate"></i><span
-        class="right-nav-text">{{ trans('teachers_trans.Students') }} </span></a>
+        class="right-nav-text">الطلاب</span></a>
         </li>
 
 
@@ -34,19 +34,19 @@
   <li>
             <a href="javascript:void(0);" data-toggle="collapse" data-target="#sections-menu">
                 <div class="pull-left"><i class="fas fa-chalkboard"></i><span
-                        class="right-nav-text">{{ trans('teachers_trans.Reports') }} </span></div>
+                        class="right-nav-text">التقارير</span></div>
                 <div class="pull-right"><i class="ti-plus"></i></div>
                 <div class="clearfix"></div>
             </a>
             <ul id="sections-menu" class="collapse" data-parent="#sidebarnav">
-            <li><a href="{{route('attendance.report')}}">{{ trans('teachers_trans.Attendance Report') }}  </a></li>                <li><a href="#">{{ trans('teachers_trans.Exam Report') }}  </a></li>
+            <li><a href="{{route('attendance.report')}}">تقرير الحضور والغياب</a></li>                <li><a href="#">تقرير الامتحانات</a></li>
             </ul>
 
         </li>
         <!-- الملف الشخصي-->
         <li>
             <a href="{{route('profile.show')}}"><i class="fas fa-id-card-alt"></i><span
-                    class="right-nav-text">{{ trans('teachers_trans.Profile') }}  </span></a>
+                    class="right-nav-text">الملف الشخصي</span></a>
         </li>
 
     </ul>

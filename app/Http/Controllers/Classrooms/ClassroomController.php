@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Classroom;   
 use App\Models\Grade;   
 use Flasher\Toastr\Prime\ToastrInterface;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 class ClassroomController extends Controller 
 {
@@ -18,28 +17,7 @@ class ClassroomController extends Controller
    */
   public function index()
   {
-    $url = 'http://localhost:8001/wordpress/wp-json/service-api/v1/requests';
-
-    // Make a GET request to the WordPress API
-    $response = Http::get($url);
-
-    // Check if the request was successful
-    if ($response->successful()) {
-        // Decode the JSON response
-        $data = $response->json();
-
-        // Process the data (e.g., save to database, return as JSON, etc.)
-       
-    } else {
-        // Handle the error
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Failed to fetch data from WordPress API',
-            'error' => $response->status(),
-        ], $response->status());
-    }
-
-    /*  $Grades = Grade::all();
+      $Grades = Grade::all();
       $My_Classes = Classroom::all();
   
     /*  foreach ($My_Classes as $classroom) {
@@ -48,7 +26,7 @@ class ClassroomController extends Controller
           }
       }*/
   
-      return view('pages.My_Classes.My_Classes', compact('data'));
+      return view('pages.My_Classes.My_Classes', compact('My_Classes', 'Grades'));
   }
   
 
@@ -133,35 +111,40 @@ $classroom->save();
    */
   public function update(Request $request)
   {
-   
-
+    $id=$request->id;
+    $translations = [
+      'en' => $request->Name_en,
+      'ar' => $request->Name
+  ];
+   /* Classroom::where('id', $id)->update([
+      'Name_Class' => ['en' => $request->Name_en, 'ar' => $request->Name],
+      'Grade_id'=>$request->Grade_id,
+    ]);
+    Session::flash('success', trans('messages.Update'));
+        return redirect()->route('Classrooms.index');*/
         try {
-            $id = $request->id;
-            
-            // Prepare the data for the WordPress API
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'service' => $request->service,
-                'phone' => $request->phone,
-                'address' => $request->address // Note: fixing the spelling difference between form and API
-            ];
-
-            // Make the PUT request to WordPress API
-            $response = Http::put("http://localhost/wordpress/wp-json/service-api/v1/requests/{$id}", $data);
-
-            if ($response->successful()) {
-                return redirect()->back()->with('success', 'Service request updated successfully');
-            } else {
-                return redirect()->back()->with('error', 'Failed to update service request');
-            }
-
+            // Find the existing classroom by ID
+            $classroom = Classroom::findOrFail($id);
+    
+            // Use the Spatie\Translatable\HasTranslations package to handle translations
+            $classroom->setTranslation('Name_Class', 'en', $request->Name_en);
+            $classroom->setTranslation('Name_Class', 'ar', $request->Name);
+            $classroom->Grade_id = $request->Grade_id;
+    
+            // Save the updated classroom
+            $classroom->save();
+    
+            // Flash success message and redirect
+            Session::flash('success', trans('messages.success'));
+            return redirect()->route('Classrooms.index');
+        
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+            // Handle any exceptions
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     
-}
-  
+    
+  }
 
   /**
    * Remove the specified resource from storage.
@@ -169,33 +152,12 @@ $classroom->save();
    * @param  int  $id
    * @return Response
    */
-// App/Http/Controllers/ServiceRequestController.php
-
-public function destroy(Request $request)
-{
-    try {
-        $id=$request->id;
-        // Make the DELETE request to WordPress API
-        $response = Http::delete("http://localhost/wordpress/wp-json/service-api/v1/requests/{$id}");
-
-        if ($response->successful()) {
-            return redirect()->back()->with('success', 'Service request deleted successfully');
-
-          
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Failed to delete service request'
-            ], 500);
-        }
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'An error occurred: ' . $e->getMessage()
-        ], 500);
-    }
-}
+  public function destroy(Request $request)
+  {
+    $Grades = Classroom::findOrFail($request->id)->delete();
+    Session::flash('delete', trans('messages.Delete'));
+    return redirect()->route('Classrooms.index');
+  }
   public function delete_all(Request $request)
   {
       $delete_all_id = explode(",", $request->delete_all_id);// rodo array w ofsel binhom

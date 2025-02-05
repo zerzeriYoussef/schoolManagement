@@ -28,19 +28,6 @@
 
                         </ul>
                     </li>
-                      <!-- employees-->
-                      <li>
-                        <a href="javascript:void(0);" data-toggle="collapse" data-target="#Employees-menu">
-                            <div class="pull-left"><i class="fas fa-school"></i><span
-                                    class="right-nav-text">employees</span></div>
-                            <div class="pull-right"><i class="ti-plus"></i></div>
-                            <div class="clearfix"></div>
-                        </a>
-                        <ul id="Grades-menu" class="collapse" data-parent="#sidebarnav">
-                            <li><a href="{{route('Grades.index')}}">{{trans('main_trans.Grades_list')}}</a></li>
-
-                        </ul>
-                    </li>
                     <!-- classes-->
                     <li>
                         <a href="javascript:void(0);" data-toggle="collapse" data-target="#classes-menu">

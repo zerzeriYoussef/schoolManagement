@@ -33,7 +33,7 @@ class LoginController extends Controller
     }*/
     public function loginForm($type){
 
-        return view('auth.loggin',compact('type'));
+        return view('auth.login',compact('type'));
     }
     public function __construct()
     {
@@ -46,7 +46,7 @@ class LoginController extends Controller
         return $this->redirect($request);
       }
       else{
-        return redirect()->back()->with('message', 'password invalid');
+        return redirect()->back()->with('message', 'password invalid       ');
     }
 
   }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('my__parents', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('Email')->unique();
+            $table->string('Password');
 
             //Fatherinformation
             $table->string('Name_Father');

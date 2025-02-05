@@ -10,7 +10,7 @@ class Grade extends Model
     use HasTranslations;
     protected $guarded = [];
     public $translatable = ['name'];
-   // protected $table = 'Grades';
+    protected $table = 'Grades';
     
     public $timestamps = true;
     public function classrooms()

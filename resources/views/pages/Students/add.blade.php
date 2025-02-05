@@ -118,15 +118,60 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="Classroom_id">{{trans('Students_trans.classrooms')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="Classroom_id">
+                                            
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="section_id">{{trans('Students_trans.section')}} : </label>
+                                    <select id="SectionSelect" name="section_id" class="custom-select mr-sm-2">
+    <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
+    @foreach($sections as $section)
+        <option value="{{ $section->id }}" >{{ $section->Name_Section }}</option>
+    @endforeach
+</select>
+                                </div>
+                            </div>
+
                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="parent_id">{{trans('Students_trans.parent')}} : <span class="text-danger">*</span></label>
+                                    <select class="custom-select mr-sm-2" name="parent_id">
+                                        <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
+                                       @foreach($parents as $parent)
+                                            <option value="{{ $parent->id }}">{{ $parent->Name_Father }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="academic_year">{{trans('Students_trans.academic_year')}} : <span class="text-danger">*</span></label>
+                                <select class="custom-select mr-sm-2" name="academic_year">
+                                    <option selected disabled>{{trans('Parent_trans.Choose')}}...</option>
+                                    @php
+                                        $current_year = date("Y");
+                                    @endphp
+                                    @for($year=$current_year; $year<=$current_year +1 ;$year++)
+                                        <option value="{{ $year}}">{{ $year }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+                        </div><br>
+                        <div class="col-md-3">
                         <div class="form-group">
                             <label for="academic_year">{{trans('Students_trans.Attachements')}} : <span class="text-danger">*</span></label>
                             <input type="file" accept="image/*" name="photos[]" multiple>
                         </div>
                     </div>
-
-                        </div>
-                       
                     <button class="btn btn-success btn-sm nextBtn btn-lg pull-right" type="submit">{{trans('Students_trans.submit')}}</button>
                 </form>
 
